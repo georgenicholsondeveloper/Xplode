@@ -20,16 +20,12 @@ public class PlayerCharacterScript : MonoBehaviour {
         if (touches > 0)
         {
             touchedPosition = Input.GetTouch(0);
-       //     transform.right = touchedPosition - transform.position;
-            GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = touchedPosition.position;
-       //     if(transform.rotation.z < 90)
-         //   {
-          //      playerRigid.AddForce(Vector2.right * 10);
-           // }
-          //  else
-            //{
-            //    playerRigid.AddForce(Vector2.left * 10);
-          //  }
+                 transform.LookAt (Camera.main.ScreenToWorldPoint(touchedPosition.position) - transform.position);
+            GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition.position);
+
+            playerRigid.velocity = Vector2.zero;
+            playerRigid.AddForce(-transform.forward * 300);
+          
             
 
         }
