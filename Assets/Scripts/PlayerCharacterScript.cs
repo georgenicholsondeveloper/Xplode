@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCharacterScript : MonoBehaviour {
+
     GameObject player;
     Rigidbody2D playerRigid;
     Touch touchedPosition;
