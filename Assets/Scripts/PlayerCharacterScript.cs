@@ -7,23 +7,26 @@ public class PlayerCharacterScript : MonoBehaviour {
     GameObject player;
     Rigidbody2D playerRigid;
     Touch touchedPosition;
-    
+    GameObject body;
+    private Quaternion fixedRotate;
     int touches;
-	// Use this for initialization
+	
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRigid = player.GetComponent<Rigidbody2D>();
-        
+        body = GameObject.FindGameObjectWithTag("Body");
+        fixedRotate = body.transform.rotation;
+
 	}
 
-    // Update is called once per frame
+   
     void Update() {
         Movement();
+     
 	}
 
     void Movement()
     {
-
         touches = Input.touchCount;
         if (touches > 0)
         {
@@ -33,10 +36,8 @@ public class PlayerCharacterScript : MonoBehaviour {
 
             playerRigid.velocity = Vector2.zero;
             playerRigid.AddForce(-transform.up * 800);
-
-
-
         }
+        body.transform.rotation = fixedRotate;
     }
 
     void PointToTouch()
@@ -46,4 +47,5 @@ public class PlayerCharacterScript : MonoBehaviour {
 
         transform.up = lookDirection;
     }
+
 }
