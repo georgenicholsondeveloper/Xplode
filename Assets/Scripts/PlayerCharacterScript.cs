@@ -33,9 +33,9 @@ public class PlayerCharacterScript : MonoBehaviour {
             touchedPosition = Input.GetTouch(0);
             PointToTouch();
             GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition.position);
-
+            touches = 0;
             playerRigid.velocity = Vector2.zero;
-            playerRigid.AddForce(-transform.up * 800);
+            playerRigid.AddForce(-transform.up * 500);
         }
         body.transform.rotation = fixedRotate;
     }
