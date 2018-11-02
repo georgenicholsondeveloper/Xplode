@@ -6,7 +6,7 @@ public class PlayerCharacterScript : MonoBehaviour {
 
     GameObject player;
     Rigidbody2D playerRigid;
-    Touch touchedPosition;
+    Vector3 touchedPosition;
     GameObject body;
     private Quaternion fixedRotate;
     int touches;
@@ -27,22 +27,24 @@ public class PlayerCharacterScript : MonoBehaviour {
 
     void Movement()
     {
-        touches = Input.touchCount;
-        if (touches > 0)
+       // touches = Input.touchCount;
+        if (Input.GetMouseButtonDown(0))
         {
-            touchedPosition = Input.GetTouch(0);
+            //touchedPosition = Input.GetTouch(0);
+            touchedPosition = Input.mousePosition;
             PointToTouch();
-            GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition.position);
+            GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition);
             touches = 0;
             playerRigid.velocity = Vector2.zero;
-            playerRigid.AddForce(-transform.up * 500);
+            playerRigid.AddForce(-transform.up * 800);
+         
         }
         body.transform.rotation = fixedRotate;
     }
 
     void PointToTouch()
     {
-        Vector2 touchPosition = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+        Vector2 touchPosition = Camera.main.ScreenToWorldPoint(touchedPosition);
         Vector2 lookDirection = (touchPosition - (Vector2)transform.position).normalized;
 
         transform.up = lookDirection;
