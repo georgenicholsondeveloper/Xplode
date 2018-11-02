@@ -10,11 +10,13 @@ public class PlayerCharacterScript : MonoBehaviour {
     GameObject body;
     private Quaternion fixedRotate;
     int touches;
+    public int score;
 	
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRigid = player.GetComponent<Rigidbody2D>();
         body = GameObject.FindGameObjectWithTag("Body");
+        score = 0;
         fixedRotate = body.transform.rotation;
 
 	}
