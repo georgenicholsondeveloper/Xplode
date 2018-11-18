@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Touch
   - Body
+  - objects
   layers:
   - Default
   - TransparentFX
