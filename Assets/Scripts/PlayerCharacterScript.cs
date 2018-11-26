@@ -9,7 +9,6 @@ public class PlayerCharacterScript : MonoBehaviour {
     Vector3 touchedPosition;
     GameObject body;
     private Quaternion fixedRotate;
-    int touches;
     public int score;
 	
 	void Start () {
@@ -36,7 +35,6 @@ public class PlayerCharacterScript : MonoBehaviour {
             touchedPosition = Input.mousePosition;
             PointToTouch();
             GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchTrialScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition);
-            touches = 0;
             playerRigid.velocity = Vector2.zero;
             playerRigid.AddForce(-transform.up * 1000);
          

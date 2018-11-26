@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CollectableScript : MonoBehaviour {
+    public GameObject manager;
 
+    private void Start()
+    {
+        manager = GameObject.Find("GameManager");
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.GetComponent<PlayerCharacterScript>().score++;
-            
-            Destroy(gameObject);
-            print(collision.GetComponent<PlayerCharacterScript>().score * 100);
+            manager.GetComponent<GameManager>().score = manager.GetComponent<GameManager>().score + 100;
+            Destroy(gameObject);         
         }
     }
 }
