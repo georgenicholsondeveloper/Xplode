@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TouchTrialScript : MonoBehaviour {
+public class TouchDetectionScript : MonoBehaviour {
+
     public Vector2 newPos;
-	// Use this for initialization
-	void Start () {
+
+	void Start ()
+    {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
+
+	void Update ()
+    {
         transform.position = newPos;
 	}
 }
