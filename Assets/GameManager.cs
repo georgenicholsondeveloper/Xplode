@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
     public int score = 0;
-    public bool hasFinished = false;
     public float time;
     public Text collectableUpdate;
     public Text finalCollectables;
@@ -13,34 +12,35 @@ public class GameManager : MonoBehaviour {
     public Text finalScore;
 
     private float total;
+    private GameObject menu;
     
 	
-	void Start () {
-       
-    }
-	
-
-	void Update () {
-        time = Time.time;
-        DontDestroyOnLoad(gameObject);
-        ScoreUpdate();
-        FinalScoreUpdate();
-    }
-
-    void FinalScoreUpdate()
+	void Start ()
     {
-        if(hasFinished == false)
-        {
-            total = score * 5 - time * 10;
-        }
-    
-     
-        
+        DontDestroyOnLoad(gameObject);
+        menu = GameObject.Find("ScoreMenu");
+    }
+	
+
+	void Update ()
+    {
+        TextDisplayUpdate();
+        ScoreUpdate();
     }
 
     void ScoreUpdate()
+    {
+        if(EndZoneScript.hasFinished == false)
+        {
+            total = score * 5 - time * 10;
+            time = Time.time;
+            menu.SetActive(false);
+        }   
+    }
+
+    void TextDisplayUpdate()
     {   
-        collectableUpdate.text = "Score: " + score;
+        collectableUpdate.text = "Points: " + score;
         finalCollectables.text = "Collectables: " + score;
         finalTime.text = "Time Taken: " + time;
         finalScore.text = "Final Score: " + total.ToString("F0")+ " points";

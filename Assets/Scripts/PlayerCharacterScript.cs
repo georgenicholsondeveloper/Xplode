@@ -8,22 +8,25 @@ public class PlayerCharacterScript : MonoBehaviour {
     Rigidbody2D playerRigid;
     Vector3 touchedPosition;
     GameObject body;
+
     private Quaternion fixedRotate;
+
     public int score;
+    public int testPublic = 0;
 	
-	void Start () {
+	void Start ()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRigid = player.GetComponent<Rigidbody2D>();
         body = GameObject.FindGameObjectWithTag("Body");
         score = 0;
         fixedRotate = body.transform.rotation;
-
 	}
 
    
-    void Update() {
+    public void Update() {
         Movement();
-     
+        testPublic++;
 	}
 
     void Movement()
@@ -50,4 +53,5 @@ public class PlayerCharacterScript : MonoBehaviour {
         transform.up = lookDirection;
     }
 
+    
 }
