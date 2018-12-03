@@ -5,7 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
+
     public int score;
+ 
     public float time;
     public Text collectableUpdate;
     public Text deathCollectables;
@@ -14,11 +16,13 @@ public class GameManager : MonoBehaviour {
     public Text finalTime;
     public Text finalScore;
     public Text multiplierText;
+    public TrailRenderer trail;
 
     private float total;
     private float totalCounter;
     private GameObject menu;
     private GameObject deathMenu;
+    private GameObject pauseMenu;
     private int timeTick;
     private int currentScene;
     private bool multiply;
@@ -28,8 +32,12 @@ public class GameManager : MonoBehaviour {
     {
         menu = GameObject.Find("ScoreMenu");
         deathMenu = GameObject.Find("DeathMenu");
+        pauseMenu = GameObject.Find("PauseMenu");
         currentScene = SceneManager.GetActiveScene().buildIndex;
+        trail = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<TrailRenderer>();
+        trail.enabled = true;
         deathMenu.SetActive(false);
+        pauseMenu.SetActive(false);
         totalCounter = 0;
         timeTick = 101;
         Time.timeScale = 1;
@@ -65,7 +73,8 @@ public class GameManager : MonoBehaviour {
         {
           
             menu.SetActive(true);
-            if(timeTick > 1)
+            trail.enabled = false;
+            if (timeTick > 1)
             {
                 Time.timeScale -= 0.01f;
                 timeTick -= 1;
@@ -114,6 +123,8 @@ public class GameManager : MonoBehaviour {
         if (PlayerCharacterScript.damage >= 2)
         {
             deathMenu.SetActive(true);
+            trail.enabled = false;
+
             if (timeTick > 1)
             {
                 Time.timeScale -= 0.01f;
@@ -135,5 +146,25 @@ public class GameManager : MonoBehaviour {
     public void MenuReturn()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void Pause()
+    {
+        if (PlayerCharacterScript.damage < 2 && EndZoneScript.hasFinished != true)
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            trail.enabled = false;
+        }
+    }
+
+    public void Continue()
+    {
+      
+            Time.timeScale = 1;
+            pauseMenu.SetActive(false);
+            trail.enabled = true;
+
+
     }
 }

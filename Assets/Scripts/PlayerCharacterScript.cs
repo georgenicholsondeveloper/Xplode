@@ -6,20 +6,26 @@ public class PlayerCharacterScript : MonoBehaviour {
 
     public static int damage;
     public int score;
+    public static bool dontMove;
+    public bool detectImmunity;
 
     private Quaternion fixedRotate;
     private GameObject player;
+    private SpriteRenderer playerRend;
     private Rigidbody2D playerRigid;
     private Vector3 touchedPosition;
     private GameObject body;
+    private Vector2 firstPoint;
+    private Vector2 secondPoint;
     private bool immune;
     private float immuneTimer;
-    public bool detectImmunity;
+   
 
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerRigid = player.GetComponent<Rigidbody2D>();
+        playerRend = player.GetComponentInChildren<SpriteRenderer>();
         body = GameObject.FindGameObjectWithTag("Body");
         score = 0;
         fixedRotate = body.transform.rotation;
@@ -32,19 +38,45 @@ public class PlayerCharacterScript : MonoBehaviour {
     {
         Movement();
         DamageProtection();
+        ImmunityMaterialChange();
+        CalculatePause();
+      
+    }
+
+    void CalculatePause()
+    {
+        firstPoint = new Vector3(544, 542);
+        secondPoint = new Vector3(600, 590);
+        if(Input.mousePosition.x > firstPoint.x && Input.mousePosition.y > firstPoint.y) 
+        {
+            if(Input.mousePosition.x < secondPoint.x && Input.mousePosition.y < secondPoint.y)
+            {
+                dontMove = true;
+            }
+        }
+        else
+        {
+            dontMove = false;
+        }
     }
 
     void Movement()
     {
-        if (Input.GetMouseButtonDown(0))
+        if(dontMove == false)
         {
-            touchedPosition = Input.mousePosition;
-            PointToTouch();
-            GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchDetectionScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition);
-            playerRigid.velocity = Vector2.zero;
-            playerRigid.AddForce(-transform.up * 1000);
+            if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.5)
+            {
+                touchedPosition = Input.mousePosition;
+                PointToTouch();
+                GameObject.FindGameObjectWithTag("Touch").GetComponent<TouchDetectionScript>().newPos = Camera.main.ScreenToWorldPoint(touchedPosition);
+                playerRigid.velocity = Vector2.zero;
+                playerRigid.AddForce(-transform.up * 1000);
+            }
         }
+          
+        
         body.transform.rotation = fixedRotate;
+
     }
 
     void PointToTouch()
@@ -64,6 +96,7 @@ public class PlayerCharacterScript : MonoBehaviour {
             if (immuneTimer <= 1f)
             {
                 immune = true;
+             
             }
             else
             {
@@ -72,6 +105,19 @@ public class PlayerCharacterScript : MonoBehaviour {
             }
         }
       
+    }
+
+    void ImmunityMaterialChange()
+    {
+        if(immune == true)
+        {
+            playerRend.color = Color.red;
+        }
+        else
+        {
+            playerRend.color = Color.white;
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
