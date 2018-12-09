@@ -27,6 +27,8 @@ public class PlayerCharacterScript : MonoBehaviour {
         playerRigid = player.GetComponent<Rigidbody2D>();
         playerRend = player.GetComponentInChildren<SpriteRenderer>();
         body = GameObject.FindGameObjectWithTag("Body");
+        firstPoint = Camera.main.WorldToScreenPoint(GameObject.Find("FirstPoint").transform.position);
+        secondPoint = Camera.main.WorldToScreenPoint(GameObject.Find("SecondPoint").transform.position);
         score = 0;
         fixedRotate = body.transform.rotation;
         damage = 0;
@@ -38,31 +40,24 @@ public class PlayerCharacterScript : MonoBehaviour {
     {
         Movement();
         DamageProtection();
-        ImmunityMaterialChange();
-        CalculatePause();
-      
-    }
-
-    void CalculatePause()
-    {
-        firstPoint = new Vector3(544, 542);
-        secondPoint = new Vector3(600, 590);
-        if(Input.mousePosition.x > firstPoint.x && Input.mousePosition.y > firstPoint.y) 
-        {
-            if(Input.mousePosition.x < secondPoint.x && Input.mousePosition.y < secondPoint.y)
-            {
-                dontMove = true;
-            }
-        }
-        else
-        {
-            dontMove = false;
-        }
+        ImmunityMaterialChange();      
     }
 
     void Movement()
     {
-        if(dontMove == false)
+      
+
+
+
+        if (Input.mousePosition.x > firstPoint.x && Input.mousePosition.y > firstPoint.y)
+        {
+            if (Input.mousePosition.x < secondPoint.x && Input.mousePosition.y < secondPoint.y)
+            {
+                dontMove = true;
+               
+            }
+        }
+        else
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale > 0.5)
             {
@@ -72,9 +67,9 @@ public class PlayerCharacterScript : MonoBehaviour {
                 playerRigid.velocity = Vector2.zero;
                 playerRigid.AddForce(-transform.up * 1000);
             }
+            dontMove = false;
         }
-          
-        
+
         body.transform.rotation = fixedRotate;
 
     }

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
     private GameObject menu;
     private GameObject deathMenu;
     private GameObject pauseMenu;
+    private GameObject pauseButton;
     private int timeTick;
     private int currentScene;
     private bool multiply;
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour {
         menu = GameObject.Find("ScoreMenu");
         deathMenu = GameObject.Find("DeathMenu");
         pauseMenu = GameObject.Find("PauseMenu");
+        pauseButton = GameObject.Find("PauseButton");
         currentScene = SceneManager.GetActiveScene().buildIndex;
         trail = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<TrailRenderer>();
         trail.enabled = true;
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour {
         {
           
             menu.SetActive(true);
+            pauseButton.SetActive(false);
             trail.enabled = false;
             if (timeTick > 1)
             {
@@ -120,9 +123,10 @@ public class GameManager : MonoBehaviour {
     void DeathMenu()
     {
 
-        if (PlayerCharacterScript.damage >= 2)
+        if (PlayerCharacterScript.damage >= 2 && EndZoneScript.hasFinished == false)
         {
             deathMenu.SetActive(true);
+            pauseButton.SetActive(false);
             trail.enabled = false;
 
             if (timeTick > 1)
@@ -154,6 +158,7 @@ public class GameManager : MonoBehaviour {
         {
             Time.timeScale = 0;
             pauseMenu.SetActive(true);
+            pauseButton.SetActive(false);
             trail.enabled = false;
         }
     }
@@ -161,9 +166,10 @@ public class GameManager : MonoBehaviour {
     public void Continue()
     {
       
-            Time.timeScale = 1;
-            pauseMenu.SetActive(false);
-            trail.enabled = true;
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        pauseButton.SetActive(true);
+        trail.enabled = true;
 
 
     }
