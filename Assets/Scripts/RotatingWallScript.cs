@@ -37,7 +37,6 @@ public class RotatingWallScript : MonoBehaviour {
 
         if (returnRot == true && (currentRot < startRot + 2 || currentRot > endRot - 2))
         {
-            print("wow");
             transform.RotateAround(transform.parent.position, Vector3.forward, 45 * Time.deltaTime);
         }
         else
