@@ -45,10 +45,6 @@ public class PlayerCharacterScript : MonoBehaviour {
 
     void Movement()
     {
-      
-
-
-
         if (Input.mousePosition.x > firstPoint.x && Input.mousePosition.y > firstPoint.y)
         {
             if (Input.mousePosition.x < secondPoint.x && Input.mousePosition.y < secondPoint.y)

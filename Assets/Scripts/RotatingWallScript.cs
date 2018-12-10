@@ -11,7 +11,7 @@ public class RotatingWallScript : MonoBehaviour {
 
     void Start ()
     {
-        startRot = transform.rotation.eulerAngles.z;
+        startRot = transform.localRotation.eulerAngles.z;
               
 
         endRot = startRot + 180;
@@ -21,7 +21,7 @@ public class RotatingWallScript : MonoBehaviour {
 
     void Update()
     {
-        currentRot = transform.rotation.eulerAngles.z;
+        currentRot = transform.localRotation.eulerAngles.z;
 
 
         if(returnRot == false && (currentRot > endRot + 2 || currentRot < endRot - 2))
