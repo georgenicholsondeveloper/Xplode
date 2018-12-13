@@ -113,15 +113,18 @@ public class PlayerCharacterScript : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(detectImmunity == false)
+        if(collision.gameObject.transform.parent.tag == "Collide")
         {
-            immuneTimer = 0;
-            detectImmunity = true;
-        }
+            if (detectImmunity == false)
+            {
+                immuneTimer = 0;
+                detectImmunity = true;
+            }
 
-        if(immune == false)
-        {
-            damage++;
+            if (immune == false)
+            {
+                damage++;
+            }
         }
     }
 
